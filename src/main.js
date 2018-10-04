@@ -7,15 +7,17 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import Vuesax from 'vuesax'
 import 'vuesax/dist/vuesax.css' //Vuesax styles
+import router from '@/router'
 
 Vue.config.productionTip = false
 
 Vue.use(BootstrapVue);
-Vue.use(Vuesax)
+Vue.use(Vuesax);
 
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
+  router,
   components: { App },
   template: '<App/>'
 })
