@@ -42,23 +42,28 @@ export default {
   },
   methods: {
     getAnimes(){
+      this.showLoading();
       axios.get('https://kitsu.io/api/edge/anime').then( response => {
         this.results = response.data
         this.animes = this.results.data
         this.nextButton = true
-        console.log(this.results);
+        this.hideLoading();
+        // console.log(this.results);
       });
     },
     next10Anime: function(){
+      this.showLoading();
       var next = this.results.links.next
       axios.get(next).then( response => {
         this.results = response.data
         this.animes = this.results.data
         this.prevButton = true
+        this.hideLoading();
         console.log(this.results)
       });
     },
     prev10Anime: function(){
+      this.showLoading();
       var prev = this.results.links.prev
       axios.get(prev).then(response => {
         this.results = response.data
@@ -67,11 +72,18 @@ export default {
         if (exist == undefined) {
           this.prevButton = false
         }
+        this.hideLoading();
         console.log(exist)
       });
     },
     addAnimeToWatchlist(anime) {
       this.$emit("addAnimeToWatchlist", anime);
+    },
+    showLoading: function() {
+      this.$vs.loading();
+    },
+    hideLoading() {
+      this.$vs.loading.close();
     }
   }
 }

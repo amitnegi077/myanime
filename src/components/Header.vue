@@ -19,7 +19,7 @@
 </template> -->
 <template>
   <div>
-    <vs-navbar v-model="activeItem" class="nabarx navbar">
+    <vs-navbar class="nabarx navbar">
 
       <vs-navbar-title>
         My Anime

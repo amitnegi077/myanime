@@ -3,7 +3,8 @@
     <app-header />
     <!-- <app-content v-on:addAnimeToWatchlist="addAnimeToWatchlist"
                   v-bind:watchlist="watchlist"/> -->
-    <router-view />
+    <router-view  v-on:addAnimeToWatchlist="addAnimeToWatchlist"
+                    v-bind:watchlist="watchlist"/>
     <app-footer />
   </div>
 </template>
@@ -29,6 +30,7 @@ export default {
   methods: {
     addAnimeToWatchlist(anime) {
       this.watchlist.push(anime);
+      console.log(this.watchlist);
     }
   }
 }
