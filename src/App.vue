@@ -1,28 +1,53 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <HelloWorld/>
+    <app-header />
+    <!-- <app-content v-on:addAnimeToWatchlist="addAnimeToWatchlist"
+                  v-bind:watchlist="watchlist"/> -->
+    <router-view />
+    <app-footer />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld'
+
+import AppHeader from './components/Header'
+// import AppContent from './components/Content'
+import AppFooter from './components/Footer'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    AppHeader,
+    // AppContent,
+    AppFooter
+  },
+  data () {
+    return {
+      watchlist: []
+    }
+  },
+  methods: {
+    addAnimeToWatchlist(anime) {
+      this.watchlist.push(anime);
+    }
   }
 }
+
 </script>
 
 <style>
+html,body {
+  height: 100%;
+  width: 100%;
+}
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  /* font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  margin-top: 60px; */
+  height: inherit;
+  width: inherit;
 }
 </style>
