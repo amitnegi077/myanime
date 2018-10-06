@@ -1,21 +1,24 @@
-# myanime
+# My Anime
+**A Vue.js Project that helps you create and maintain your own anime watchlist.**
+Poject available at https://myanime.ga
 
-> A Vue.js project
+# Made with:
+* Vue.js
+* Kitsu Api
+* Vuesax
+* Bootstrap Vue
 
-## Build Setup
+# Getting Started
+```
+#Clone the repo
+>git clone git@github.com:webcord/myanime.git
 
-``` bash
-# install dependencies
-npm install
+#Install dependencies
+>npm install
 
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
+#Serve with hot reload at localhost:8080
+>npm run dev
 ```
 
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+# Authors
+A project by @YesItsVikram and @AmitNegi077
