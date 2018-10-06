@@ -2,7 +2,7 @@
 	<div class="container-fluid content-wrapper">
 		<b-row class="content">
 			<div v-for="anime in watchlist"
-						 class="col-2 card anime-card">
+						 class="col-4 col-md-2 card anime-card">
 				<img v-bind:src="anime.attributes.posterImage.medium"
 								class="card-img-top anime-card-img">
 				<div class="card-body anime-card-body">
