@@ -1,8 +1,6 @@
 <template>
   <div id="app">
     <app-header />
-    <!-- <app-content v-on:addAnimeToWatchlist="addAnimeToWatchlist"
-                  v-bind:watchlist="watchlist"/> -->
     <router-view  v-on:addAnimeToWatchlist="addAnimeToWatchlist"
                     v-bind:watchlist="watchlist"/>
     <app-footer />
@@ -12,25 +10,37 @@
 <script>
 
 import AppHeader from './components/Header'
-// import AppContent from './components/Content'
 import AppFooter from './components/Footer'
 
 export default {
   name: 'App',
   components: {
     AppHeader,
-    // AppContent,
     AppFooter
   },
-  data () {
+  data() {
     return {
       watchlist: []
+    }
+  },
+  created() {
+    this.setWatchlist();
+  },
+  watch: {
+    watchlist() {
+      this.setLocal()
     }
   },
   methods: {
     addAnimeToWatchlist(anime) {
       this.watchlist.push(anime);
-      console.log(this.watchlist);
+      this.setLocal();
+    },
+    setWatchlist() {
+      this.watchlist = JSON.parse(localStorage.getItem('watchlist') || '[]');
+    },
+    setLocal() {
+      localStorage.setItem('watchlist', JSON.stringify(this.watchlist))
     }
   }
 }
