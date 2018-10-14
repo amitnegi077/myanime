@@ -8,11 +8,13 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import Vuesax from 'vuesax'
 import 'vuesax/dist/vuesax.css' //Vuesax styles
 import router from '@/router'
+import Carousel3d from 'vue-carousel-3d'
 
 Vue.config.productionTip = false
 
 Vue.use(BootstrapVue);
 Vue.use(Vuesax);
+Vue.use(Carousel3d);
 
 /* eslint-disable no-new */
 new Vue({

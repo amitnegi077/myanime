@@ -22,6 +22,9 @@
     <vs-navbar class="nabarx navbar">
 
       <vs-navbar-title>
+        <vs-navbar-brand>
+          <img src="../assets/naruto1.png" alt="">
+        </vs-navbar-brand>
         My Anime
       </vs-navbar-title>
 

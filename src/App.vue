@@ -3,6 +3,7 @@
     <app-header />
     <router-view  v-on:addAnimeToWatchlist="addAnimeToWatchlist"
                     v-bind:watchlist="watchlist"/>
+    
     <app-footer />
   </div>
 </template>
@@ -16,7 +17,7 @@ export default {
   name: 'App',
   components: {
     AppHeader,
-    AppFooter
+    AppFooter,
   },
   data() {
     return {
