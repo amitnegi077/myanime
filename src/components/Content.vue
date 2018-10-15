@@ -338,7 +338,7 @@ export default {
   }
 
   #carousel{
-    margin: 9% 5%;
+    margin: 4% 5% 8% 5%;
   }
 
   .container{
