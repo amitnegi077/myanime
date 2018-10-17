@@ -29,10 +29,7 @@
     props: ['watchlist'],
     data() {
       return {}
-    },
-		mounted() {
-			console.log(this.watchlist);
-		}
+    }
   }
 
 </script>
