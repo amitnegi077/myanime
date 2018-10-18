@@ -1,37 +1,9 @@
-<!--
-<template>
-  <div class="container-fluid content-wrapper">
-    <b-row class="content">
-      <div v-for="anime in animes"
-             class="col-4 col-md-2 card anime-card">
-        <img v-bind:src="anime.attributes.posterImage.medium"
-                class="card-img-top anime-card-img">
-        <div class="card-body anime-card-body">
-          <h5 class="card-title anime-card-title">
-            {{anime.attributes.canonicalTitle}}
-          </h5>
-          <div class="card-text">
-            Rating: {{anime.attributes.averageRating}}
-          </div>
-          <vs-button vs-color="success" vs-type="filled"
-                    v-on:click="addAnimeToWatchlist(anime)" >
-            Add to Watchlist
-          </vs-button>
-        </div>
-      </div>
-    </b-row>
-    <button v-on:click="prev10Anime" v-show="prevButton">Previous</button>
-    <button v-on:click="next10Anime" v-show="nextButton">Next</button>
-  </div>
-</template>
--->
-
 <template>
   <div>
     <div id="carousel">
-      <carousel-3d :autoplay="true" :autoplay-timeout="2500" :display="5" :controls-visible="true" 
+      <carousel-3d :autoplay="true" :autoplay-timeout="2500" :display="5" :controls-visible="true"
                   :clickable="true" :count="animes.length" :height="450" >
-        <slide v-for="(anime, i) in animes" :index="i">
+        <slide v-for="(anime, i) in animes" :index="i" :key="i">
           <figure>
             <img :src="anime.attributes.posterImage.medium">
             <figcaption>
@@ -44,7 +16,43 @@
       </carousel-3d>
     </div>
 
-    <div id="row1" class="container">
+    <div v-for="(animesAndGenre, index) in animesByGenres" :key="index"
+            id="row1" class="container">
+      <h5>
+        {{animesAndGenre.genre}}
+        <button class="viewMore"><a href="#">view more</a></button>
+      </h5>
+      <vs-row vs-justify="center" class="row">
+        <vs-col v-for="(anime, i) in animesAndGenre.animes" :key="i"
+                  vs-type="flex" vs-justify="center"
+                    vs-align="center" vs-w="2" class="animeCard">
+          <vs-card actionable class="cardx">
+            <div slot="header" class="cardTitle">
+              <strong>
+                {{anime.attributes.canonicalTitle}}
+              </strong>
+            </div>
+            <div slot="media">
+              <img :src="anime.attributes.posterImage.medium">
+            </div>
+            <div>
+              <span>Rating: {{anime.attributes.averageRating}}</span>
+            </div>
+            <div slot="footer">
+              <vs-row vs-justify="center">
+                <vs-button @click="addAnimeToWatchlist(anime)"
+                            color="primary" vs-type="gradient" >
+                    Add to Watchlist
+                </vs-button>
+              </vs-row>
+            </div>
+          </vs-card>
+        </vs-col>
+
+      </vs-row>
+    </div>
+
+    <!-- <div id="row1" class="container">
       <h5>
         ADVENTURE
         <button class="viewMore"><a href="#">view more</a></button>
@@ -67,11 +75,11 @@
               <vs-row vs-justify="flex-end">
                 <vs-button color="primary" vs-type="gradient" >View</vs-button>
                 <vs-button color="danger" vs-type="gradient">Delete</vs-button>
-              </vs-row> 
+              </vs-row>
             </div>
           </vs-card>
         </vs-col>
-                
+
       </vs-row>
     </div>
 
@@ -102,7 +110,7 @@
             </div>
           </vs-card>
         </vs-col>
-                
+
       </vs-row>
     </div>
 
@@ -133,7 +141,7 @@
             </div>
           </vs-card>
         </vs-col>
-                
+
       </vs-row>
     </div>
 
@@ -164,7 +172,7 @@
             </div>
           </vs-card>
         </vs-col>
-                
+
       </vs-row>
     </div>
 
@@ -195,14 +203,12 @@
             </div>
           </vs-card>
         </vs-col>
-                
-      </vs-row>
+
+      </vs-row> -->
     </div>
 
   </div>
 </template>
-
-
 
 <script>
 import axios from 'axios'
@@ -213,22 +219,19 @@ export default {
     return {
       nextButton: false,
       prevButton: false,
-      viewMoreButton: false,  
+      viewMoreButton: false,
       results: '',
       animes: '',
       genres: ['adventure', 'action', 'thriller', 'mystery', 'horror'],
-      adventures: '',
-      actions: '',
-      thrillers: '',
-      mysterys: '',
-      horrors: '', 
-
+      animesByGenres: []
     }
   },
   created() {
     this.getAnimes();
-    this.getRowAnime();
-    
+    // this.getRowAnime();
+    this.genres.forEach( (genre) => {
+      this.getAnimeByGenres(genre);
+    })
   },
   methods: {
     getAnimes(){
@@ -240,70 +243,19 @@ export default {
         this.nextButton = true
         this.hideLoading();
         // console.log(this.animes);
-      });        
+      });
     },
-    getRowAnime(){
-
-      for (var i=0; i<5; i++) {
-        let genre = this.genres[i]
-        let link = 'https://kitsu.io/api/edge/anime?filter[categories]=' + genre + '&page[limit]=5&page[offset]=0'
-
+    getAnimeByGenres(genre){
+        let link = 'https://kitsu.io/api/edge/anime?filter[categories]='
+                      + genre + '&page[limit]=5&page[offset]=0';
         axios.get(link).then( response => {
-          
-          if (genre == 'adventure') {
-            this.adventures = response.data.data
-            console.log("ADVENTURE");
-            console.log(this.adventures);
-          } else if (genre == 'action') {
-              this.actions = response.data.data
-              console.log("ACTION");
-              console.log(this.actions);
-          } else if (genre == 'thriller') {
-              this.thrillers = response.data.data
-              console.log("THRILLER");
-              console.log(this.thrillers);
-          } else if (genre == 'mystery') {
-              this.mysterys = response.data.data
-              console.log("MYSTERY");
-              console.log(this.mysterys);
-          } else if (genre == 'horror') {
-              this.horrors = response.data.data
-              console.log("HORROR");
-              console.log(this.horrors);
+          var obj = {
+            genre: genre,
+            animes: response.data.data
           }
-          
+          this.animesByGenres.push(obj);
         });
-        
-      }
     },
-
-
-    // next10Anime: function(){
-    //   this.showLoading();
-    //   var next = this.results.links.next
-    //   axios.get(next).then( response => {
-    //     this.results = response.data
-    //     this.animes = this.results.data
-    //     this.prevButton = true
-    //     this.hideLoading();
-    //     console.log(this.results)
-    //   });
-    // },
-    // prev10Anime: function(){
-    //   this.showLoading();
-    //   var prev = this.results.links.prev
-    //   axios.get(prev).then(response => {
-    //     this.results = response.data
-    //     this.animes = this.results.data
-    //     var exist = this.results.links.prev
-    //     if (exist == undefined) {
-    //       this.prevButton = false
-    //     }
-    //     this.hideLoading();
-    //     console.log(exist)
-    //   });
-    // },
-
 
     addAnimeToWatchlist(anime) {
       this.$emit("addAnimeToWatchlist", anime);
@@ -314,6 +266,35 @@ export default {
     hideLoading() {
       this.$vs.loading.close();
     }
+
+
+        // next10Anime: function(){
+        //   this.showLoading();
+        //   var next = this.results.links.next
+        //   axios.get(next).then( response => {
+        //     this.results = response.data
+        //     this.animes = this.results.data
+        //     this.prevButton = true
+        //     this.hideLoading();
+        //     console.log(this.results)
+        //   });
+        // },
+        // prev10Anime: function(){
+        //   this.showLoading();
+        //   var prev = this.results.links.prev
+        //   axios.get(prev).then(response => {
+        //     this.results = response.data
+        //     this.animes = this.results.data
+        //     var exist = this.results.links.prev
+        //     if (exist == undefined) {
+        //       this.prevButton = false
+        //     }
+        //     this.hideLoading();
+        //     console.log(exist)
+        //   });
+        // },
+
+
   }
 }
 </script>
@@ -344,7 +325,7 @@ export default {
   .container{
     padding: 0%;
     margin: 5% auto;
-    // border: 2px solid black; 
+    // border: 2px solid black;
 
       .viewMore{
         float: right;
@@ -363,19 +344,19 @@ export default {
       .animeCard{
         margin: 2%;
         padding: 0%;
-        
+
       }
       .cardTitle{
-        display: block; 
+        display: block;
         white-space: nowrap;
         text-overflow: ellipsis;
         overflow: hidden;
       }
 
-      
-    
+
+
   }
- 
+
   .content-wrapper {
     margin-top: 60px;
   }

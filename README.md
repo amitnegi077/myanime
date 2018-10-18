@@ -1,6 +1,7 @@
 # My Anime
 **A Vue.js Project that helps you create and maintain your own anime watchlist.**
-Poject available at https://myanime.ga
+
+Project available at https://myanime.ga
 
 # Made with:
 * Vue.js
