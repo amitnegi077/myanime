@@ -1,3 +1,4 @@
+<!--
 <template>
 	<div class="container-fluid content-wrapper">
 		<b-row class="content">
@@ -21,6 +22,43 @@
 		</b-row>
 	</div>
 </template>
+-->
+
+<template>
+	<div class="container">
+		<vs-row vs-justify="center" class="row">
+        <vs-col v-for="anime in watchlist"
+                  vs-type="flex" vs-justify="left"
+                    vs-align="left" vs-w="2" class="animeCard">
+          <vs-card actionable class="cardx">
+            <div slot="header" class="cardTitle">
+              <strong>
+                {{anime.attributes.canonicalTitle}}
+              </strong>
+            </div>
+            <div slot="media">
+              <img :src="anime.attributes.posterImage.medium">
+            </div>
+            <div>
+              <span>Rating: {{anime.attributes.averageRating}}</span>
+            </div>
+            <div slot="footer">
+              <vs-row vs-justify="center">
+                <vs-button @click="addAnimeToWatchlist(anime)"
+                            color="primary" vs-type="gradient" v-show="false" >
+                    Add to Watchlist
+                </vs-button>
+								<vs-button color="danger" vs-type="gradient"> 
+									Remove
+								</vs-button>
+              </vs-row>
+            </div>
+          </vs-card>
+        </vs-col>
+		</vs-row>
+	</div>
+</template>
+
 
 <script>
 
@@ -35,10 +73,24 @@
 </script>
 
 <style scoped lang="scss">
-	.content-wrapper {
-		margin-top: 60px;
+	
+	.animeCard{
+		margin: 2%;
+
+		.cardTitle{
+			display: block;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+			overflow: hidden;
+		}	
+
 	}
-	.content {
-		padding: 0 50px;
-	}
+	
+	
+	// .content-wrapper {
+	// 	margin-top: 60px;
+	// }
+	// .content {
+	// 	padding: 0 50px;
+	// }
 </style>

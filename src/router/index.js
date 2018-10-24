@@ -15,6 +15,12 @@ export default new Router({
       name: 'watchlist',
       path: '/watchlist/',
       component: () => import('../components/Watchlist')
+    },
+    {
+      name: 'viewmore',
+      path: '/:genre',
+      component: () => import('../components/ViewMore'),
+      
     }
   ]
 })

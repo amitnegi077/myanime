@@ -127,7 +127,7 @@ export default {
   #center{
     width: 50%;
     // border: 2px solid black;
-    margin: auto;
+    margin: 0 auto;
     .nav-item{
       margin-right: auto;
       margin-left: auto;

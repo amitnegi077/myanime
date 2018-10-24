@@ -19,8 +19,8 @@
     <div v-for="(animesAndGenre, index) in animesByGenres" :key="index"
             id="row1" class="container">
       <h5>
-        {{animesAndGenre.genre}}
-        <button class="viewMore"><a href="#">view more</a></button>
+        {{animesAndGenre.genre.toUpperCase()}}
+        <router-link v-bind:to="'/' +animesAndGenre.genre"><button class="viewMore"><a href="#">view more</a></button></router-link>
       </h5>
       <vs-row vs-justify="center" class="row">
         <vs-col v-for="(anime, i) in animesAndGenre.animes" :key="i"
@@ -52,131 +52,7 @@
       </vs-row>
     </div>
 
-    <!-- <div id="row1" class="container">
-      <h5>
-        ADVENTURE
-        <button class="viewMore"><a href="#">view more</a></button>
-      </h5>
-      <vs-row vs-justify="center" class="row">
-        <vs-col v-for="adventure in adventures" vs-type="flex" vs-justify="center" vs-align="center" vs-w="2" class="animeCard">
-          <vs-card actionable class="cardx">
-            <div slot="header" class="cardTitle">
-              <strong>
-                {{adventure.attributes.canonicalTitle}}
-              </strong>
-            </div>
-            <div slot="media">
-              <img :src="adventure.attributes.posterImage.medium">
-            </div>
-            <div>
-              <span>Rating: {{adventure.attributes.averageRating}}</span>
-            </div>
-            <div slot="footer">
-              <vs-row vs-justify="flex-end">
-                <vs-button color="primary" vs-type="gradient" >View</vs-button>
-                <vs-button color="danger" vs-type="gradient">Delete</vs-button>
-              </vs-row>
-            </div>
-          </vs-card>
-        </vs-col>
-
-      </vs-row>
-    </div>
-
-    <div id="row2" class="container">
-      <h5>
-        ACTION
-        <button class="viewMore"><a href="#">view more</a></button>
-      </h5>
-      <vs-row vs-justify="center" class="row">
-        <vs-col v-for="action in actions" vs-type="flex" vs-justify="center" vs-align="center" vs-w="2" class="animeCard">
-          <vs-card actionable class="cardx">
-            <div slot="header" class="cardTitle">
-              <strong>
-                {{action.attributes.canonicalTitle}}
-              </strong>
-            </div>
-            <div slot="media">
-              <img :src="action.attributes.posterImage.medium">
-            </div>
-            <div>
-              <span>Rating: {{action.attributes.averageRating}}</span>
-            </div>
-            <div slot="footer">
-              <vs-row vs-justify="flex-end">
-                <vs-button color="primary" vs-type="gradient" >View</vs-button>
-                <vs-button color="danger" vs-type="gradient">Delete</vs-button>
-              </vs-row>
-            </div>
-          </vs-card>
-        </vs-col>
-
-      </vs-row>
-    </div>
-
-    <div id="row3" class="container">
-      <h5>
-        THRILLER
-        <button class="viewMore"><a href="#">view more</a></button>
-      </h5>
-      <vs-row vs-justify="center" class="row">
-        <vs-col v-for="thriller in thrillers" vs-type="flex" vs-justify="center" vs-align="center" vs-w="2" class="animeCard">
-          <vs-card actionable class="cardx">
-            <div slot="header" class="cardTitle">
-              <strong>
-                {{thriller.attributes.canonicalTitle}}
-              </strong>
-            </div>
-            <div slot="media">
-              <img :src="thriller.attributes.posterImage.medium">
-            </div>
-            <div>
-              <span>Rating: {{thriller.attributes.averageRating}}</span>
-            </div>
-            <div slot="footer">
-              <vs-row vs-justify="flex-end">
-                <vs-button color="primary" vs-type="gradient" >View</vs-button>
-                <vs-button color="danger" vs-type="gradient">Delete</vs-button>
-              </vs-row>
-            </div>
-          </vs-card>
-        </vs-col>
-
-      </vs-row>
-    </div>
-
-    <div id="row4" class="container">
-      <h5>
-        MYSTERY
-        <button class="viewMore"><a href="#">view more</a></button>
-      </h5>
-      <vs-row vs-justify="center" class="row">
-        <vs-col v-for="mystery in mysterys" vs-type="flex" vs-justify="center" vs-align="center" vs-w="2" class="animeCard">
-          <vs-card actionable class="cardx">
-            <div slot="header" class="cardTitle">
-              <strong>
-                {{mystery.attributes.canonicalTitle}}
-              </strong>
-            </div>
-            <div slot="media">
-              <img :src="mystery.attributes.posterImage.medium">
-            </div>
-            <div>
-              <span>Rating: {{mystery.attributes.averageRating}}</span>
-            </div>
-            <div slot="footer">
-              <vs-row vs-justify="flex-end">
-                <vs-button color="primary" vs-type="gradient" >View</vs-button>
-                <vs-button color="danger" vs-type="gradient">Delete</vs-button>
-              </vs-row>
-            </div>
-          </vs-card>
-        </vs-col>
-
-      </vs-row>
-    </div>
-
-    <div id="row5" class="container">
+    <!--  <div id="row5" class="container">
       <h5>
         HORROR
         <button class="viewMore"><a href="#">view more</a></button>
@@ -211,10 +87,14 @@
 </template>
 
 <script>
+import ViewMore from './ViewMore.vue';
 import axios from 'axios'
 
 export default {
   name: 'Content',
+  components: {
+    'ViewMore': ViewMore,
+  },
   data () {
     return {
       nextButton: false,
@@ -223,7 +103,8 @@ export default {
       results: '',
       animes: '',
       genres: ['adventure', 'action', 'thriller', 'mystery', 'horror'],
-      animesByGenres: []
+      animesByGenres: [],
+      
     }
   },
   created() {
@@ -231,7 +112,7 @@ export default {
     // this.getRowAnime();
     this.genres.forEach( (genre) => {
       this.getAnimeByGenres(genre);
-    })
+    });
   },
   methods: {
     getAnimes(){
@@ -240,7 +121,7 @@ export default {
         this.results = response.data
         // console.log(this.results);
         this.animes = this.results.data
-        this.nextButton = true
+        // this.nextButton = true
         this.hideLoading();
         // console.log(this.animes);
       });
@@ -268,31 +149,7 @@ export default {
     }
 
 
-        // next10Anime: function(){
-        //   this.showLoading();
-        //   var next = this.results.links.next
-        //   axios.get(next).then( response => {
-        //     this.results = response.data
-        //     this.animes = this.results.data
-        //     this.prevButton = true
-        //     this.hideLoading();
-        //     console.log(this.results)
-        //   });
-        // },
-        // prev10Anime: function(){
-        //   this.showLoading();
-        //   var prev = this.results.links.prev
-        //   axios.get(prev).then(response => {
-        //     this.results = response.data
-        //     this.animes = this.results.data
-        //     var exist = this.results.links.prev
-        //     if (exist == undefined) {
-        //       this.prevButton = false
-        //     }
-        //     this.hideLoading();
-        //     console.log(exist)
-        //   });
-        // },
+        
 
 
   }
