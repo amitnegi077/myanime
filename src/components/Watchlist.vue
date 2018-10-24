@@ -73,24 +73,24 @@
 </script>
 
 <style scoped lang="scss">
-	
-	.animeCard{
-		margin: 2%;
+.container{
+      padding: 0%;
+      margin: 0% auto;
 
-		.cardTitle{
-			display: block;
-			white-space: nowrap;
-			text-overflow: ellipsis;
-			overflow: hidden;
-		}	
+      .row{
+        margin: 0%;
+        padding: 0%;
+      }
+      .animeCard{
+        margin: 2%;
+        padding: 0%;
 
-	}
-	
-	
-	// .content-wrapper {
-	// 	margin-top: 60px;
-	// }
-	// .content {
-	// 	padding: 0 50px;
-	// }
+      }
+      .cardTitle{
+        display: block;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+}	
 </style>
